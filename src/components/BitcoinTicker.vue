@@ -17,17 +17,22 @@ const { currency, lastPrice, status, toggleCurrency } = useTicker()
     <template v-if="status === 'CONNECTING'">
       <span class="text-zinc-400 text-3xl">Connecting...</span>
     </template>
+    <template v-else-if="status === 'CLOSED'">
+      <span class="text-red-500 text-3xl">Closed</span>
+    </template>
 
     <div
-      v-else
-      class="lg:text-[144px] flex cursor-pointer select-none font-black -translate-x-[0.2ch]"
+      v-else-if="lastPrice"
+      class="text-[68px] sm:text-8xl md:text-9xl lg:text-[156px] flex cursor-pointer select-none font-black -translate-x-[0.2ch]"
       role="button"
       @click="toggleCurrency"
     >
       <span class="text-zinc-700">
         {{ CURRENCIES[currency].symbol }}
       </span>
-      <span class="text-zinc-400" v-if="lastPrice">{{ formatPrice(lastPrice) }}</span>
+      <span class="text-zinc-400">
+        {{ formatPrice(lastPrice) }}
+      </span>
     </div>
   </div>
 </template>
