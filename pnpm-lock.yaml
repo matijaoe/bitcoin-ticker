@@ -11,6 +11,9 @@ importers:
       '@fontsource-variable/kode-mono':
         specifier: ^5.1.0
         version: 5.1.0
+      '@fontsource-variable/victor-mono':
+        specifier: ^5.1.0
+        version: 5.1.0
       '@fontsource/ia-writer-duo':
         specifier: ^5.1.0
         version: 5.1.0
@@ -408,6 +411,9 @@ packages:
 
   '@fontsource-variable/kode-mono@5.1.0':
     resolution: {integrity: sha512-hV4u3QMyBEfLzvdwTNGLi9Nyd/0LsQmQWdR/oWzYRsAVMAc3+kcLFRJ6QOs6+qc7ey9G01kKqQ4TVSNqcZpu0w==}
+
+  '@fontsource-variable/victor-mono@5.1.0':
+    resolution: {integrity: sha512-i7Imx5BVOzUfrmNsuvfe5rR0THCi7Nda+sfxoPlsCUpA6zuP3vfkpfCitSbPNR8/sH3A2f96HXME5Zn8uCwm1A==}
 
   '@fontsource/ia-writer-duo@5.1.0':
     resolution: {integrity: sha512-M6zC8Jo4az9seJ/vJvW6ovupB5d7JAtb09qrNmJhiqY3fN3uj1UgnfU2KCWhJnTIC0YE/ET1XA20MqFICX5HRg==}
@@ -2250,6 +2256,8 @@ snapshots:
       levn: 0.4.1
 
   '@fontsource-variable/kode-mono@5.1.0': {}
+
+  '@fontsource-variable/victor-mono@5.1.0': {}
 
   '@fontsource/ia-writer-duo@5.1.0': {}
 

@@ -1,5 +1,4 @@
-import '@fontsource/ia-writer-duo/400.css'
-import '@fontsource/ia-writer-duo/700.css'
+import '@fontsource-variable/victor-mono'
 
 import './assets/main.css'
 import './assets/tailwind.css'
