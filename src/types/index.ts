@@ -29,4 +29,6 @@ export type TickerPrices = {
 
 export type TickerProvider = 'kraken' | 'coinbase' | 'bitstamp' | 'binance'
 
+export type TickerPriceFormat = 'btc' | 'sats'
+
 export const availableProviders: TickerProvider[] = ['kraken', 'coinbase', 'binance', 'bitstamp']
