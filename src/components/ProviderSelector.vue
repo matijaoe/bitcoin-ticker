@@ -9,14 +9,15 @@ const isProviderSelected = (provider: TickerProvider) => selectedProviders.value
 </script>
 
 <template>
-  <div class="flex items-center text-xs">
-    <div v-for="provider in availableProviders" :key="provider" class="flex items-center gap-2 p-2">
+  <div class="flex items-center text-xs gap-3">
+    <div v-for="provider in availableProviders" :key="provider">
       <label class="flex items-center gap-2 cursor-pointer group/check">
         <input
           type="checkbox"
           v-model="selectedProviders"
           :value="provider"
-          class="accent-zinc-500 hidden"
+          class="accent-zinc-500"
+          hidden
         />
         <span
           class="capitalize select-none"

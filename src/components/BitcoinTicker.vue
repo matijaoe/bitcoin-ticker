@@ -4,6 +4,7 @@ import { type TickerProvider } from '@/types'
 
 const props = defineProps<{
   provider: TickerProvider
+  showProviderLabel?: boolean
 }>()
 
 const formatPrice = (price: number) => {
@@ -28,7 +29,7 @@ const { currency, lastPrice, status, CURRENCIES, toggleCurrency } = useTicker(pr
 
     <div
       v-else-if="lastPrice"
-      class="text-[68px] sm:text-8xl md:text-9xl lg:text-[156px] flex cursor-pointer select-none font-black -translate-x-[0.2ch]"
+      class="text-[68px] sm:text-8xl md:text-9xl lg:text-[156px] xl:text-[200px] flex cursor-pointer select-none font-black -translate-x-[0.2ch]"
       role="button"
       @click="toggleCurrency"
     >
@@ -36,7 +37,10 @@ const { currency, lastPrice, status, CURRENCIES, toggleCurrency } = useTicker(pr
         <span class="text-zinc-700 leading-none">
           {{ CURRENCIES[currency as keyof typeof CURRENCIES].symbol }}
         </span>
-        <span class="text-zinc-700 font-bold text-[9px] md:text-xs text-left mt-3">
+        <span
+          v-if="showProviderLabel"
+          class="text-zinc-700 font-bold text-[9px] md:text-xs text-left mt-3"
+        >
           {{ props.provider }}
         </span>
       </div>
