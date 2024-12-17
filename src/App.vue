@@ -7,5 +7,6 @@ import BitcoinTicker from './components/BitcoinTicker.vue'
     <BitcoinTicker provider="kraken" />
     <BitcoinTicker provider="coinbase" />
     <BitcoinTicker provider="bitstamp" />
+    <BitcoinTicker provider="binance" />
   </div>
 </template>

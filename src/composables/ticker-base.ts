@@ -4,6 +4,7 @@ import type { TickerPrices } from '@/types'
 
 export const CURRENCIES = {
   USD: { symbol: '$' },
+  USDT: { symbol: '$' },
   EUR: { symbol: '€' },
   GBP: { symbol: '£' },
 } as const
@@ -20,7 +21,7 @@ interface TickerConfig {
 }
 
 export const useTickerBase = (config: TickerConfig) => {
-  const currency = ref<Currency>('USD')
+  const currency = ref<Currency>(config.supportedCurrencies[0])
   const lastPrices = ref<TickerPrices>({})
 
   const { data, status } = useWebSocket(config.wsUrl, {
@@ -36,9 +37,6 @@ export const useTickerBase = (config: TickerConfig) => {
     },
     onError: (err) => {
       console.error(`WebSocket error for ${config.wsUrl}:`, err)
-    },
-    onMessage: (event) => {
-      console.log(`[${config.wsUrl}] Message:`, event)
     },
     autoReconnect: true,
   })
@@ -68,6 +66,7 @@ export const useTickerBase = (config: TickerConfig) => {
   }
 
   return {
+    lastPricesPerCurrency,
     currency,
     CURRENCIES,
     lastPrice,

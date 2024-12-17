@@ -17,7 +17,7 @@ const { currency, lastPrice, status, CURRENCIES, toggleCurrency } = useTicker(pr
 </script>
 
 <template>
-  <div class="w-full grid place-content-center text-center gap-10" :title="props.provider">
+  <div class="w-full grid place-content-center text-center" :title="props.provider" v-if="status">
     <template v-if="status === 'CONNECTING'">
       <span class="text-zinc-400 text-3xl">Connecting...</span>
     </template>
@@ -31,10 +31,15 @@ const { currency, lastPrice, status, CURRENCIES, toggleCurrency } = useTicker(pr
       role="button"
       @click="toggleCurrency"
     >
-      <span class="text-zinc-700">
-        {{ CURRENCIES[currency as keyof typeof CURRENCIES].symbol }}
-      </span>
-      <span class="text-zinc-400">
+      <div class="flex flex-col items-center">
+        <span class="text-zinc-700 leading-none">
+          {{ CURRENCIES[currency as keyof typeof CURRENCIES].symbol }}
+        </span>
+        <span class="text-zinc-700 font-bold text-[9px] md:text-xs text-left mt-3">
+          {{ props.provider }}
+        </span>
+      </div>
+      <span class="text-zinc-400 leading-none">
         {{ formatPrice(lastPrice) }}
       </span>
     </div>

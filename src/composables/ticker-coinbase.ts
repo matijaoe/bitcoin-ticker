@@ -12,7 +12,6 @@ export const useTickerCoinbase = () => {
     }),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     parseMessage: (message: any) => {
-      console.log('coinbase', message)
       if (message?.type === 'ticker') {
         return {
           symbol: message.product_id,
