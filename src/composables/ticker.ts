@@ -2,8 +2,7 @@ import { useTickerKraken } from './ticker-kraken'
 import { useTickerCoinbase } from './ticker-coinbase'
 import { useTickerBitstamp } from './ticker-bitstamp'
 import { useTickerBinance } from './ticker-binance'
-
-export type TickerProvider = 'kraken' | 'coinbase' | 'bitstamp' | 'binance'
+import type { TickerProvider } from '@/types'
 
 export const useTicker = (provider: TickerProvider) => {
   switch (provider) {

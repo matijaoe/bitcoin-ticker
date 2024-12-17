@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { useTicker, type TickerProvider } from '@/composables/ticker'
+import { useTicker } from '@/composables/ticker'
+import { type TickerProvider } from '@/types'
 
 const props = defineProps<{
   provider: TickerProvider
@@ -19,10 +20,10 @@ const { currency, lastPrice, status, CURRENCIES, toggleCurrency } = useTicker(pr
 <template>
   <div class="w-full grid place-content-center text-center" :title="props.provider" v-if="status">
     <template v-if="status === 'CONNECTING'">
-      <span class="text-zinc-400 text-3xl">Connecting...</span>
+      <span class="text-zinc-400 text-3xl">Connecting ({{ props.provider }})...</span>
     </template>
     <template v-else-if="status === 'CLOSED'">
-      <span class="text-red-500 text-3xl">Closed</span>
+      <span class="text-red-500 text-3xl">Closed ({{ props.provider }})</span>
     </template>
 
     <div
