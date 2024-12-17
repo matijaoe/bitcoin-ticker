@@ -1,4 +1,4 @@
-import type { CURRENCIES } from '@/composables/ticker-kraken'
+import type { CURRENCIES } from '@/composables/ticker-base'
 
 export interface TickerResponse {
   channel: 'ticker' & {}
