@@ -1,71 +1,27 @@
-import { useWebSocket } from '@vueuse/core'
-import { computed, ref } from 'vue'
-import type { TickerResponse, TickerPrices } from '@/types'
+import { useTickerBase, type Currency } from './ticker-base'
 
 export const useTickerKraken = () => {
-  const CURRENCIES = {
-    USD: { pair: 'BTC/USD', symbol: '$' },
-    EUR: { pair: 'BTC/EUR', symbol: '€' },
-    GBP: { pair: 'BTC/GBP', symbol: '£' },
-  }
-
-  type Currency = keyof typeof CURRENCIES
-  const currencies = Object.keys(CURRENCIES) as Currency[]
-
-  const currency = ref<Currency>('USD')
-  const lastPrices = ref<TickerPrices>({})
-
-  const { data, status } = useWebSocket('wss://ws.kraken.com/v2', {
-    onConnected: (ws: WebSocket) => {
-      console.log('Connected to Kraken WebSocket')
-      const subscriptionMessage = {
-        method: 'subscribe',
-        params: {
-          channel: 'ticker',
-          symbol: Object.values(CURRENCIES).map((c) => c.pair),
-        },
+  return useTickerBase({
+    wsUrl: 'wss://ws.kraken.com/v2',
+    supportedCurrencies: ['USD', 'EUR'],
+    formatPair: (currency: Currency) => `BTC/${currency}`,
+    formatSubscription: (pairs) => ({
+      method: 'subscribe',
+      params: {
+        channel: 'ticker',
+        symbol: pairs,
+      },
+    }),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    parseMessage: (message: any) => {
+      console.log('kraken', message)
+      if (message?.channel === 'ticker' && message?.data?.[0]) {
+        return {
+          symbol: message.data[0].symbol,
+          price: message.data[0].last,
+        }
       }
-      ws.send(JSON.stringify(subscriptionMessage))
+      return null
     },
-    onDisconnected: () => {
-      console.log('Disconnected from Kraken WebSocket')
-    },
-    onError: (err) => {
-      console.error('WebSocket error:', err)
-    },
-    autoReconnect: true,
   })
-
-  const lastPricesPerCurrency = computed<TickerPrices>(() => {
-    const message = data.value ? (JSON.parse(data.value) as TickerResponse) : null
-
-    if (message?.channel === 'ticker') {
-      console.log(message)
-      message.data?.forEach((d) => {
-        Object.entries(CURRENCIES).forEach(([key, { pair }]) => {
-          if (d.symbol === pair) {
-            lastPrices.value[key as Currency] = d.last
-          }
-        })
-      })
-    }
-    return lastPrices.value
-  })
-
-  const lastPrice = computed(() => {
-    return lastPricesPerCurrency.value[currency.value]
-  })
-
-  const toggleCurrency = () => {
-    const currencyIndex = currencies.indexOf(currency.value)
-    currency.value = currencies[(currencyIndex + 1) % currencies.length]
-  }
-
-  return {
-    currency,
-    CURRENCIES,
-    lastPrice,
-    status,
-    toggleCurrency,
-  }
 }

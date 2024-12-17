@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { useTickerKraken } from '@/composables/ticker-kraken'
-import { useTickerCoinbase } from '@/composables/ticker-coinbase'
+import { useTicker, type TickerProvider } from '@/composables/ticker'
 
 const props = defineProps<{
-  provider: 'kraken' | 'coinbase'
+  provider: TickerProvider
 }>()
 
 const formatPrice = (price: number) => {
@@ -14,12 +13,11 @@ const formatPrice = (price: number) => {
   }).format(price)
 }
 
-const { currency, lastPrice, status, CURRENCIES, toggleCurrency } =
-  props.provider === 'kraken' ? useTickerKraken() : useTickerCoinbase()
+const { currency, lastPrice, status, CURRENCIES, toggleCurrency } = useTicker(props.provider)
 </script>
 
 <template>
-  <div class="w-full grid place-content-center text-center gap-10">
+  <div class="w-full grid place-content-center text-center gap-10" :title="props.provider">
     <template v-if="status === 'CONNECTING'">
       <span class="text-zinc-400 text-3xl">Connecting...</span>
     </template>
