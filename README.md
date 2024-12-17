@@ -1,5 +1,7 @@
 # realtime bitcoin ticker
 
+Supports Kraken, Coinbase, Binance & Bitstamp.
+
 ![CleanShot 2024-12-17 at 13 37 08@2x](https://github.com/user-attachments/assets/6217a6c3-0ca0-495a-bdd5-496dd3ea9ad0)
 
 ![CleanShot 2024-12-17 at 13 39 09@2x](https://github.com/user-attachments/assets/6f697e30-1c47-4186-8bf5-4a5b482f62d2)
