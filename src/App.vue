@@ -13,15 +13,15 @@ const showProviderLabel = ref(true)
 </script>
 
 <template>
-  <div
-    class="h-screen flex flex-col gap-6 md:gap-10 lg:gap-14 justify-center items-center bg-black text-zinc-200 relative"
-  >
-    <BitcoinTicker
-      v-for="provider in selectedProviders"
-      :key="provider"
-      :provider
-      :show-provider-label
-    />
+  <div class="h-screen flex flex-col justify-center items-center bg-black text-zinc-200">
+    <div class="flex flex-col gap-6 md:gap-10 lg:gap-14">
+      <BitcoinTicker
+        v-for="provider in selectedProviders"
+        :key="provider"
+        :provider
+        :show-provider-label
+      />
+    </div>
 
     <div class="group fixed bottom-0 left-0 w-full group">
       <div

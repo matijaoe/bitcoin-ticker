@@ -19,7 +19,7 @@ const { currency, lastPrice, status, CURRENCIES, toggleCurrency } = useTicker(pr
 </script>
 
 <template>
-  <div class="w-full grid place-content-center text-center" :title="props.provider" v-if="status">
+  <div class="w-full flex items-center text-center" :title="props.provider" v-if="status">
     <template v-if="status === 'CONNECTING'">
       <span class="text-zinc-400 text-3xl">Connecting ({{ props.provider }})...</span>
     </template>
