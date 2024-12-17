@@ -2,16 +2,16 @@ import { useWebSocket } from '@vueuse/core'
 import { computed, ref } from 'vue'
 import type { TickerResponse, TickerPrices } from '@/types'
 
-export const CURRENCIES = {
-  USD: { pair: 'BTC/USD', symbol: '$' },
-  EUR: { pair: 'BTC/EUR', symbol: '€' },
-  GBP: { pair: 'BTC/GBP', symbol: '£' },
-}
+export const useTickerKraken = () => {
+  const CURRENCIES = {
+    USD: { pair: 'BTC/USD', symbol: '$' },
+    EUR: { pair: 'BTC/EUR', symbol: '€' },
+    GBP: { pair: 'BTC/GBP', symbol: '£' },
+  }
 
-export type Currency = keyof typeof CURRENCIES
-export const currencies = Object.keys(CURRENCIES) as Currency[]
+  type Currency = keyof typeof CURRENCIES
+  const currencies = Object.keys(CURRENCIES) as Currency[]
 
-export const useTicker = () => {
   const currency = ref<Currency>('USD')
   const lastPrices = ref<TickerPrices>({})
 
@@ -40,6 +40,7 @@ export const useTicker = () => {
     const message = data.value ? (JSON.parse(data.value) as TickerResponse) : null
 
     if (message?.channel === 'ticker') {
+      console.log(message)
       message.data?.forEach((d) => {
         Object.entries(CURRENCIES).forEach(([key, { pair }]) => {
           if (d.symbol === pair) {
@@ -62,6 +63,7 @@ export const useTicker = () => {
 
   return {
     currency,
+    CURRENCIES,
     lastPrice,
     status,
     toggleCurrency,

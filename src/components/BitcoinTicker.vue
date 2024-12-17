@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import { useTicker, CURRENCIES } from '@/composables/ticker'
+import { useTickerKraken } from '@/composables/ticker-kraken'
+import { useTickerCoinbase } from '@/composables/ticker-coinbase'
+
+const props = defineProps<{
+  provider: 'kraken' | 'coinbase'
+}>()
 
 const formatPrice = (price: number) => {
   return Intl.NumberFormat('en-US', {
@@ -9,7 +14,8 @@ const formatPrice = (price: number) => {
   }).format(price)
 }
 
-const { currency, lastPrice, status, toggleCurrency } = useTicker()
+const { currency, lastPrice, status, CURRENCIES, toggleCurrency } =
+  props.provider === 'kraken' ? useTickerKraken() : useTickerCoinbase()
 </script>
 
 <template>
@@ -28,7 +34,7 @@ const { currency, lastPrice, status, toggleCurrency } = useTicker()
       @click="toggleCurrency"
     >
       <span class="text-zinc-700">
-        {{ CURRENCIES[currency].symbol }}
+        {{ CURRENCIES[currency as keyof typeof CURRENCIES].symbol }}
       </span>
       <span class="text-zinc-400">
         {{ formatPrice(lastPrice) }}
