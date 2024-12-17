@@ -7,7 +7,7 @@ export const CURRENCIES = {
   USDT: { symbol: '$' },
   EUR: { symbol: '€' },
   GBP: { symbol: '£' },
-} as const
+}
 
 export type Currency = keyof typeof CURRENCIES
 export const currencies = Object.keys(CURRENCIES) as Currency[]
