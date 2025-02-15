@@ -10,7 +10,7 @@ const isProviderSelected = (provider: TickerProvider) => selectedProviders.value
 
 <template>
   <div class="flex items-center text-xs gap-3">
-    <div v-for="provider in availableProviders" :key="provider">
+    <div v-for="(provider, index) in availableProviders" :key="provider">
       <label class="flex items-center gap-2 cursor-pointer group/check">
         <input
           type="checkbox"
@@ -28,6 +28,8 @@ const isProviderSelected = (provider: TickerProvider) => selectedProviders.value
         >
           {{ provider }}
         </span>
+
+        <span v-if="index < availableProviders.length - 1" class="text-zinc-500">/</span>
       </label>
     </div>
   </div>

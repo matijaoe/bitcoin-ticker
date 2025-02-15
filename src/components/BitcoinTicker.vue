@@ -8,6 +8,7 @@ const props = withDefaults(
     provider: TickerProvider
     priceFormat?: TickerPriceFormat
     showProviderLabel?: boolean
+    totalCount: number
   }>(),
   {
     priceFormat: 'btc',
@@ -34,28 +35,48 @@ const shownLastPrice = computed(() => {
   const satsPerDollar = Math.round(100_000_000 / lastPrice.value)
   return formatPrice(satsPerDollar)
 })
+
+const fontSize = computed(() => {
+  switch (props.totalCount) {
+    case 1:
+      return 'text-[16vw] lg:[font-size:_clamp(80px,25vh,240px)]'
+    case 2:
+      return 'text-[16vw] lg:[font-size:_clamp(80px,21vh,240px)]'
+    case 3:
+      return 'text-[16vw] lg:[font-size:_clamp(80px,18vh,240px)]'
+    case 4:
+      return 'text-[16vw] lg:[font-size:_clamp(80px,15vh,240px)]'
+    default:
+      return 'text-[16vw] lg:[font-size:_clamp(80px,12vh,240px)]'
+  }
+})
 </script>
 
 <template>
   <div
+    v-if="status"
     class="w-full flex items-center justify-center text-center"
     :title="props.provider"
-    v-if="status"
   >
-    <template v-if="status === 'CONNECTING'">
-      <span class="text-zinc-400 text-3xl">Connecting ({{ props.provider }})...</span>
+    <template v-if="status === 'CLOSED'">
+      <span class="text-red-500 text-xl md:text-3xl">Closed ({{ props.provider }})</span>
     </template>
-    <template v-else-if="status === 'CLOSED'">
-      <span class="text-red-500 text-3xl">Closed ({{ props.provider }})</span>
+    <template v-else-if="status === 'CONNECTING' || !lastPrice">
+      <span class="text-zinc-600 text-xl md:text-3xl animate-pulse">
+        Connecting ({{ props.provider }})...</span
+      >
     </template>
 
     <div
       v-else-if="lastPrice"
-      class="text-[68px] sm:text-8xl md:text-9xl lg:text-[156px] xl:text-[200px] flex items-baseline cursor-pointer select-none font-black"
-      :class="{
-        '-translate-x-[0.2ch]': priceFormat === 'btc',
-        'translate-x-[0.2ch]': priceFormat === 'sats',
-      }"
+      class="flex items-baseline cursor-pointer select-none font-black"
+      :class="[
+        fontSize,
+        {
+          '-translate-x-[0.2ch]': priceFormat === 'btc',
+          'translate-x-[0.2ch]': priceFormat === 'sats',
+        },
+      ]"
       role="button"
       @click="toggleCurrency"
     >
