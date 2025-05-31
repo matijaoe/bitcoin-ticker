@@ -1,5 +1,7 @@
 # realtime bitcoin ticker
 
+> Real-time Bitcoin price tracker pulling data from multiple exchanges via WebSockets
+
 Supports Kraken, Coinbase, Binance & Bitstamp.
 
 ![CleanShot 2024-12-17 at 13 37 08@2x](https://github.com/user-attachments/assets/6217a6c3-0ca0-495a-bdd5-496dd3ea9ad0)
